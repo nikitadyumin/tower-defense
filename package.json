@@ -4,12 +4,13 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "postinstall": "bower install",
+    "postinstall": "bower cache clean && bower install",
     "start": "node index.js"
   },
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "bower": "*",
     "express": "*"
   }
 }
