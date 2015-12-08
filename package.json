@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "postinstall": "cd ./static && bower cache clean && bower install",
-    "start": "cd ../ && node index.js"
+    "start": "node index.js"
   },
   "author": "",
   "license": "ISC",
