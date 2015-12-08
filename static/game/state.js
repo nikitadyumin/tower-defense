@@ -19,27 +19,29 @@ define(['bacon', '../util', './enemy', 'pf'], function(Bacon, util, enemy, pf) {
         const grid = new pf.Grid(map.map(l=> l.map(x=>+(x === 5))));
         const finder = new pf.AStarFinder();
 
-        function updatePositions(enemies) {
-            return enemies.map(function(e) {
-                const pos = e.position;
-                const path = finder.findPath(pos[0], pos[1], 38, 28, grid.clone());
-                e.position = path.length ? path[1] : pos;
-                return e;
-            });
+        function nextPosition(x, y) {
+            const path = finder.findPath(x, y, 38, 28, grid.clone());
+            return path.length  > 1 ? path[1] : [x, y];
         }
 
-        //const enemyS = Bacon.interval(spawn_time)
-        //    .flatMapLatest(enemy);
+        function updatePositions(state) {
+            state.enemies =  state.enemies.map(function(e) {
+                e.position = nextPosition(e.position[0], e.position[1]);
+                return e;
+            });
+            return state;
+        }
 
-        const enemyS =  enemy();
+        const enemyS = Bacon.interval(spawn_time)
+            .flatMapLatest(enemy);
 
         const mapS = Bacon.constant(map);
         const enemiesS = Bacon.constant([])
-            .combine(enemyS, addEnemy)
-            .map(updatePositions);
+            .combine(enemyS, addEnemy);
 
         return Bacon.interval(tick_time, {})
             .combine(enemiesS, enemiesL.set)
+            .combine(Bacon.constant(), updatePositions)
             .combine(mapS, mapL.set);
     };
 });
