@@ -12,7 +12,6 @@ define(['bacon', '../util', './enemy', 'pf'], function(Bacon, util, enemy, pf) {
 
     const tick_time = 500;
     const spawn_time = 1500;
-    const enemiesL = util.lens('enemies');
     const mapL = util.lens('map');
 
     return function (map) {
@@ -24,8 +23,8 @@ define(['bacon', '../util', './enemy', 'pf'], function(Bacon, util, enemy, pf) {
             return path.length  > 1 ? path[1] : [x, y];
         }
 
-        function updatePositions(state) {
-            state.enemies =  state.enemies.map(function(e) {
+        function updatePositions(state, enemies) {
+            state.enemies =  enemies.map(function(e) {
                 e.position = nextPosition(e.position[0], e.position[1]);
                 return e;
             });
@@ -40,8 +39,7 @@ define(['bacon', '../util', './enemy', 'pf'], function(Bacon, util, enemy, pf) {
             .combine(enemyS, addEnemy);
 
         return Bacon.interval(tick_time, {})
-            .combine(enemiesS, enemiesL.set)
-            .combine(Bacon.constant(), updatePositions)
+            .combine(enemiesS, updatePositions)
             .combine(mapS, mapL.set);
     };
 });
