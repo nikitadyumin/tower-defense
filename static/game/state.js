@@ -2,7 +2,7 @@
  * Created by ndyumin on 06.12.2015.
  */
 
-define(['bacon', '../util', './enemy', 'pf'], function(Bacon, util, enemy, pf) {
+define(['bacon', '../util', './enemy', 'pf'], function (Bacon, util, enemy, pf) {
     'use strict';
 
     function addEnemy(enemies, enemy) {
@@ -15,23 +15,25 @@ define(['bacon', '../util', './enemy', 'pf'], function(Bacon, util, enemy, pf) {
     const mapL = util.lens('map');
 
     return function (map) {
-        const grid = new pf.Grid(map.map(l=> l.map(x=>+(x === 5))));
+        const grid = new pf.Grid(map.grid.map(l=> l.map(x=>+(x === 5))));
         const finder = new pf.AStarFinder();
+        const spawnPositions = map.spawns;
+        const tower = map.tower;
 
         function nextPosition(x, y) {
-            const path = finder.findPath(x, y, 38, 28, grid.clone());
-            return path.length  > 1 ? path[1] : [x, y];
+            const path = finder.findPath(x, y, tower[0], tower[1], grid.clone());
+            return path.length > 1 ? path[1] : [x, y];
         }
 
         function updatePositions(state, enemies) {
-            state.enemies =  enemies.map(function(e) {
+            state.enemies = enemies.map(function (e) {
                 e.position = nextPosition(e.position[0], e.position[1]);
                 return e;
             });
             return state;
         }
 
-        const enemyS = Bacon.interval(spawn_time)
+        const enemyS = Bacon.repeatedly(spawn_time, spawnPositions)
             .flatMapLatest(enemy);
 
         const mapS = Bacon.constant(map);

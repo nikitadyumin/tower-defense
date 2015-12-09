@@ -28,7 +28,7 @@ define(['jquery', './dict'], function ($, dict) {
             const map = state.map;
 
             clean(ctx);
-            map.forEach((line, y) =>
+            map.grid.forEach((line, y) =>
                 line.forEach((cell, x) => {
                     ctx.fillStyle = getColor(cell);
                     ctx.fillRect(cellSize * x, cellSize * y, cellSize, cellSize);

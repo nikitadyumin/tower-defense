@@ -3,9 +3,9 @@
  */
 define(['bacon'], function(Bacon) {
     'use strict';
-    return function() {
+    return function(pos) {
         return Bacon.constant({
-            position: [2, 10]
+            position: pos
         });
     };
 });

@@ -13,15 +13,20 @@ define(['bacon', './dict'], function (Bacon, dict) {
     }
 
     function generateMap() {
-        const map = [];
+        const grid = [];
         for (let i = 0; i < 30; i += 1) {
-            map.push(generateLine());
+            grid.push(generateLine());
         }
 
-        map[10][2] = dict.TERRAIN.SPAWN;
-        map[28][38] = dict.TERRAIN.GOAL;
+        grid[10][2] = dict.TERRAIN.SPAWN;
+        grid[20][2] = dict.TERRAIN.SPAWN;
+        grid[28][38] = dict.TERRAIN.GOAL;
 
-        return Bacon.constant(map);
+        return Bacon.constant({
+            spawns: [[2, 10], [2, 20]],
+            tower: [38, 28],
+            grid: grid
+        });
     }
 
     return generateMap;
