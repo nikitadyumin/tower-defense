@@ -2,7 +2,7 @@
  * Created by ndyumin on 06.12.2015.
  */
 
-define(['bacon', '../util', './enemy', 'pf'], function (Bacon, util, enemy, pf) {
+define(['bacon', '../util', './enemy', './dict', 'pf'], function (Bacon, util, enemy, dict, pf) {
     'use strict';
 
     function addEnemy(enemies, enemy) {
@@ -15,7 +15,9 @@ define(['bacon', '../util', './enemy', 'pf'], function (Bacon, util, enemy, pf) 
     const mapL = util.lens('map');
 
     return function (map) {
-        const grid = new pf.Grid(map.grid.map(l=> l.map(x=>+(x === 5))));
+        const grid = new pf.Grid(map.grid.map(line =>
+            line.map( cell => cell === dict.TERRAIN.NOT_TRAVERSABLE ? 1 : 0)));
+
         const finder = new pf.AStarFinder();
         const spawnPositions = map.spawns;
         const tower = map.tower;
