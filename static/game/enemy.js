@@ -5,6 +5,7 @@ define(['bacon'], function(Bacon) {
     'use strict';
     return function(pos) {
         return Bacon.constant({
+            damage: 100,
             position: pos
         });
     };

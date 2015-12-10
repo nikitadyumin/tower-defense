@@ -23,6 +23,10 @@ define(['bacon', '../util', './enemy', './dict', 'pf'], function (Bacon, util, e
         const spawnPositions = map.spawns;
         const tower = map.tower;
 
+        function eq(xs, ys) {
+            return xs.reduce((acc, x, index) => acc && (x === ys[index]), true);
+        }
+
         function nextPosition(x, y) {
             const path = finder.findPath(x, y, tower[0], tower[1], grid.clone());
             return path.length > 1 ? path[1] : [x, y];
@@ -30,9 +34,19 @@ define(['bacon', '../util', './enemy', './dict', 'pf'], function (Bacon, util, e
 
         function updatePositions(state) {
             state.enemies = state.enemies.map(function (e) {
-                e.position = nextPosition(e.position[0], e.position[1]);
+                e.position = nextPosition(...e.position);
                 return e;
             });
+
+            state.enemies
+                .filter(e => eq(e.position, map.tower))
+                .forEach(e => {
+                   state.health -= e.damage
+                });
+
+            state.enemies = state.enemies
+                .filter(e => !eq(e.position, map.tower));
+
             return state;
         }
 
@@ -40,18 +54,18 @@ define(['bacon', '../util', './enemy', './dict', 'pf'], function (Bacon, util, e
             .flatMapLatest(enemy);
 
         const wavesS = Bacon.fromArray(map.waves)
-            .flatMap(function (wave) {
-                return Bacon.later(...wave)
-            })
-            .flatMap(function (n) {
-                return enemyS.take(n);
-            });
+            .flatMap(wave => Bacon.later(...wave))
+            .flatMap(n => enemyS.take(n));
 
         const mapS = Bacon.constant(map);
         const enemiesS = Bacon.constant([])
             .combine(wavesS, addEnemy);
 
-        return Bacon.interval(tick_time, {})
+        const state = {
+            health: 10000
+        };
+
+        return Bacon.interval(tick_time, state)
             .combine(enemiesS, enemiesL.set)
             .throttle(tick_time)
             .map(updatePositions)
