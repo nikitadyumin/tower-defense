@@ -24,11 +24,12 @@ define(['bacon', '../util', './enemy', './dict', 'pf'], function (Bacon, util, e
         const tower = map.tower;
 
         function eq(xs, ys) {
-            return xs.reduce((acc, x, index) => acc && (x === ys[index]), true);
+            return xs.length === ys.length
+                && xs.every((x, index) => x === ys[index]);
         }
 
         function nextPosition(x, y) {
-            const path = finder.findPath(x, y, tower[0], tower[1], grid.clone());
+            const path = finder.findPath(x, y, ...tower, grid.clone());
             return path.length > 1 ? path[1] : [x, y];
         }
 
@@ -39,13 +40,13 @@ define(['bacon', '../util', './enemy', './dict', 'pf'], function (Bacon, util, e
             });
 
             state.enemies
-                .filter(e => eq(e.position, map.tower))
+                .filter(e => eq(e.position, tower))
                 .forEach(e => {
-                   state.health -= e.damage
+                   state.health -= e.damage;
                 });
 
             state.enemies = state.enemies
-                .filter(e => !eq(e.position, map.tower));
+                .filter(e => !eq(e.position, tower));
 
             return state;
         }
@@ -62,7 +63,7 @@ define(['bacon', '../util', './enemy', './dict', 'pf'], function (Bacon, util, e
             .combine(wavesS, addEnemy);
 
         const state = {
-            health: 10000
+            health: map.health
         };
 
         return Bacon.interval(tick_time, state)

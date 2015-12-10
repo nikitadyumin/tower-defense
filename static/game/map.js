@@ -25,6 +25,7 @@ define(['bacon', './dict'], function (Bacon, dict) {
         return Bacon.constant({
             spawns: [[2, 10], [2, 20]],
             tower: [38, 28],
+            health: 10000,
             waves: [[1000, 5], [5000, 10], [10000, 15]],
             grid: grid
         });
