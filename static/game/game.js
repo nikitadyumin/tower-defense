@@ -5,12 +5,15 @@ define(['./map', './state', './renderer'],
     function (map, state, getRenderer) {
         'use strict';
 
+        const render_frame = 30;
         const render = getRenderer('canvas#game');
         const mapS = map();
 
         return function () {
-            mapS
-                .flatMapLatest(state)
+            const stateS = mapS.flatMapLatest(state);
+
+            Bacon.interval(render_frame)
+                .combine(stateS, (_, state) => state)
                 .onValue(render);
         };
     });

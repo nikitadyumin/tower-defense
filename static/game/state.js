@@ -11,8 +11,9 @@ define(['bacon', '../util', './enemy', './dict', 'pf'], function (Bacon, util, e
     }
 
     const tick_time = 100;
-    const spawn_time = 100;
+    const spawn_time = 150;
     const mapL = util.lens('map');
+    const enemiesL = util.lens('enemies');
 
     return function (map) {
         const grid = new pf.Grid(map.grid.map(line =>
@@ -27,8 +28,8 @@ define(['bacon', '../util', './enemy', './dict', 'pf'], function (Bacon, util, e
             return path.length > 1 ? path[1] : [x, y];
         }
 
-        function updatePositions(state, enemies) {
-            state.enemies = enemies.map(function (e) {
+        function updatePositions(state) {
+            state.enemies = state.enemies.map(function (e) {
                 e.position = nextPosition(e.position[0], e.position[1]);
                 return e;
             });
@@ -51,7 +52,9 @@ define(['bacon', '../util', './enemy', './dict', 'pf'], function (Bacon, util, e
             .combine(wavesS, addEnemy);
 
         return Bacon.interval(tick_time, {})
-            .combine(enemiesS, updatePositions)
+            .combine(enemiesS, enemiesL.set)
+            .throttle(tick_time)
+            .map(updatePositions)
             .combine(mapS, mapL.set);
     };
 });
