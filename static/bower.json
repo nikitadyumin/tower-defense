@@ -23,9 +23,6 @@
     "jquery": "~2.1.4",
     "bootstrap": "~3.3.5",
     "bacon": "~0.7.80",
-    "pathfinding":"latest",
-    "d3":"latest",
-    "c3":"latest",
-    "crossfilter":"latest"
+    "pathfinding":"latest"
   }
 }

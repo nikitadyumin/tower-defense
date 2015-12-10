@@ -3,13 +3,9 @@
 requirejs.config({
     baseUrl: './',
     paths: {
-        lib: '../bower_components',
         jquery: '../bower_components/jquery/dist/jquery.min',
         bacon: '../bower_components/bacon/dist/Bacon.min',
-        pf: '../bower_components/pathfinding/pathfinding-browser',
-        d3: '../bower_components/d3/d3.min',
-        c3: '../bower_components/c3/c3.min',
-        cf: '../bower_components/crossfilter/crossfilter.min'
+        pf: '../bower_components/pathfinding/pathfinding-browser'
     },
     shim: {
         'cf': {
