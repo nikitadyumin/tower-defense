@@ -10,8 +10,8 @@ define(['bacon', '../util', './enemy', 'pf'], function (Bacon, util, enemy, pf) 
         return enemies;
     }
 
-    const tick_time = 500;
-    const spawn_time = 1500;
+    const tick_time = 100;
+    const spawn_time = 100;
     const mapL = util.lens('map');
 
     return function (map) {
@@ -36,9 +36,17 @@ define(['bacon', '../util', './enemy', 'pf'], function (Bacon, util, enemy, pf) 
         const enemyS = Bacon.repeatedly(spawn_time, spawnPositions)
             .flatMapLatest(enemy);
 
+        const wavesS = Bacon.fromArray(map.waves)
+            .flatMap(function (wave) {
+                return Bacon.later(...wave)
+            })
+            .flatMap(function (n) {
+                return enemyS.take(n);
+            });
+
         const mapS = Bacon.constant(map);
         const enemiesS = Bacon.constant([])
-            .combine(enemyS, addEnemy);
+            .combine(wavesS, addEnemy);
 
         return Bacon.interval(tick_time, {})
             .combine(enemiesS, updatePositions)
