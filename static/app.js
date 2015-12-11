@@ -8,8 +8,8 @@ requirejs.config({
         pf: '../bower_components/pathfinding/pathfinding-browser'
     },
     shim: {
-        'cf': {
-            exports: 'crossfilter'
+        'bacon': {
+            deps: ['jquery']
         },
         'pf': {
             exports: 'PF'
