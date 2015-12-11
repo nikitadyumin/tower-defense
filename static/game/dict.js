@@ -11,7 +11,12 @@ define(function() {
         NOT_TRAVERSABLE: 5
     };
 
+    const GRID = {
+        CELL_SIZE: 30
+    };
+
     return {
+        GRID: GRID,
         TERRAIN: TERRAIN
     };
 });

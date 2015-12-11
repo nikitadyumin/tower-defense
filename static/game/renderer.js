@@ -9,14 +9,15 @@ define(['jquery', './dict'], function ($, dict) {
         const $canvas = $(sel);
         const width = $canvas.width();
         const height = $canvas.height();
-        const cellSize = 20;
+        const cellSize = dict.GRID.CELL_SIZE;
 
         function getColor(c) {
             const colors = {};
-            colors[dict.TERRAIN.TRAVERSABLE] = 'green';
-            colors[dict.TERRAIN.NOT_TRAVERSABLE] = 'maroon';
-            colors[dict.TERRAIN.SPAWN] = 'black';
-            return colors[c] || 'white';
+            colors[dict.TERRAIN.TRAVERSABLE] = '#9aafb7';
+            colors[dict.TERRAIN.NOT_TRAVERSABLE] = '#2b3b75';
+            colors[dict.TERRAIN.SPAWN] = '#7181b2';
+            colors[dict.TERRAIN.GOAL] = '#496815';
+            return colors[c] || 'black';
         }
 
         function clean(ctx) {
@@ -37,7 +38,7 @@ define(['jquery', './dict'], function ($, dict) {
             state.enemies.forEach(enemy => {
                 const x = enemy.position[0];
                 const y = enemy.position[1];
-                ctx.fillStyle = 'red';
+                ctx.fillStyle = '#8ea052';
                 ctx.fillRect(cellSize * x, cellSize * y, cellSize, cellSize);
             })
         };

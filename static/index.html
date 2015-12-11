@@ -5,12 +5,21 @@
     <title></title>
     <script src="./bower_components/requirejs/require.js" data-main="app.js"></script>
     <link rel="stylesheet" href="./bower_components/bootstrap/dist/css/bootstrap.min.css"/>
+    <style>
+        body, html{
+            background-color: black;
+            height:100%;
+        }
+        #health {
+            color: white;
+        }
+    </style>
 </head>
 <body>
 <div>
     <a href="#newgame">New game</a>
 </div>
 <div id="health"></div>
-<canvas id="game" width="800" height="600px" style="border:1px solid #000000;"></canvas>
+<canvas id="game" width="1500" height="900" style="border:1px solid #000000;"></canvas>
 </body>
 </html>
