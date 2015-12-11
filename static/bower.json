@@ -1,9 +1,9 @@
 {
-  "name": "rmc",
+  "name": "tower-defense",
   "authors": [
     "ndyumin <nikita.dyumin@gmail.com>"
   ],
-  "description": "Rocket Mission Control",
+  "description": "a simple tower defense game, written to explore BaconJS capabilities",
   "main": "app.js",
   "moduleType": [
     "amd"
