@@ -15,5 +15,7 @@ define(['./map', './state', './renderer'],
             Bacon.interval(render_frame)
                 .combine(stateS, (_, state) => state)
                 .onValue(render);
+
+            return stateS;
         };
     });
