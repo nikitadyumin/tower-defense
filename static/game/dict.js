@@ -15,7 +15,13 @@ define(function() {
         CELL_SIZE: 30
     };
 
+    const VIEWPORT = {
+        RATIO: 1.25,
+        SELECTOR: 'canvas#game'
+    };
+
     return {
+        VIEWPORT: VIEWPORT,
         GRID: GRID,
         TERRAIN: TERRAIN
     };

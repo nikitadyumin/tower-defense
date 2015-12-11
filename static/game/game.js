@@ -1,13 +1,14 @@
 /**
  * Created by ndyumin on 06.12.2015.
  */
-define(['./map', './state', './renderer'],
-    function (map, state, getRenderer) {
+define(['jquery', './dict', './map', './state', './input', './renderer'],
+    function ($, dict, map, state, input, getRenderer) {
         'use strict';
 
         const render_frame = 30;
-        const render = getRenderer('canvas#game');
+        const render = getRenderer(dict.VIEWPORT.SELECTOR);
         const mapS = map();
+        const inputS = input(selector).log();
 
         return function () {
             const stateS = mapS.flatMapLatest(state);
