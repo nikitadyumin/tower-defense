@@ -8,7 +8,7 @@ define(['jquery', './dict', './map', './state', './input', './renderer'],
         const render_frame = 30;
         const render = getRenderer(dict.VIEWPORT.SELECTOR);
         const mapS = map();
-        const inputS = input(selector).log();
+        const inputS = input(dict.VIEWPORT.SELECTOR).log();
 
         return function () {
             const stateS = mapS.flatMapLatest(state);
