@@ -1,27 +1,27 @@
 /**
  * Created by ndyumin on 06.12.2015.
  */
-define(['jquery', '../util', './dict', './map', './buildings', './state', './input', './renderer'],
-    function ($, util, dict, map, buildings, state, input, getRenderer) {
+define(['jquery', '../util', './dict', './map', './buildings', './enemies', './state', './input', './renderer'],
+    function ($, util, dict, map, buildings, enemies, state, input, getRenderer) {
         'use strict';
 
-        const render_frame = 30;
+        const render_interval = 30;
+        const tick_interval = 100;
+
         const render = getRenderer(dict.VIEWPORT.SELECTOR);
 
-        const mapS = map();
-        const inputS = input(dict.VIEWPORT.SELECTOR);
-
-        const buildingsS = Bacon.update(
-            [],
-            [mapS, inputS], buildings
-        );
-
-        const stateS = mapS.flatMap(state);
-
         return function () {
-            Bacon.interval(render_frame)
-                .combine(stateS, (_, state) => state)
-                .onValue(render);
+            const tickS = Bacon.interval(tick_interval);
+
+            const mapS = map();
+            const inputS = input(dict.VIEWPORT.SELECTOR);
+            const buildingsS = buildings(mapS, inputS);
+            const enemiesS = enemies(mapS, tickS);
+            const stateS = state(mapS, buildingsS, enemiesS);
+
+            Bacon.combineAsArray(mapS, buildingsS, enemiesS)
+                .sample(render_interval)
+                .onValues(render);
 
             return stateS;
         };

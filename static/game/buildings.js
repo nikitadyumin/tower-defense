@@ -13,8 +13,7 @@ define(['../util', './dict'], function (util, dict) {
         return buildings.some(isSamePosition);
     }
 
-    return function (buildings, map, input) {
-
+    function update(buildings, map, input) {
         if (getAtPos(map.grid, ...input) === dict.TERRAIN.TRAVERSABLE
             && !hasBuildingAt(buildings, input)) {
             return buildings.concat({
@@ -24,5 +23,12 @@ define(['../util', './dict'], function (util, dict) {
         }
 
         return buildings;
+    }
+
+    return function(mapS, inputS) {
+        return Bacon.update(
+            [],
+            [mapS, inputS], update
+        );
     }
 });

@@ -62,9 +62,7 @@ define(['jquery', './dict'], function ($, dict) {
             ctx.fillRect(0, 0, width, height);
         }
 
-        return function render(state) {
-            const map = state.map;
-
+        return function render(map, buildings, enemies) {
             clean(ctx);
             map.grid.forEach((line, y) =>
                 line.forEach((cell, x) => {
@@ -76,11 +74,17 @@ define(['jquery', './dict'], function ($, dict) {
                     }
                 }));
 
-            state.enemies.forEach(enemy => {
+            enemies.items.forEach(enemy => {
                 const cellToPixel = pos => pos.map(c => c * cellSize);
                 ctx.fillStyle = '#8ea052';
                 ctx.fillRect(...cellToPixel(enemy.position), cellSize, cellSize);
-            })
+            });
+
+            buildings.forEach(building => {
+                const cellToPixel = pos => pos.map(c => c * cellSize);
+                ctx.fillStyle = '#a0528e';
+                ctx.fillRect(...cellToPixel(building.position), cellSize, cellSize);
+            });
         };
     };
 });
