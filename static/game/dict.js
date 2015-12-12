@@ -8,6 +8,7 @@ define(function() {
         TRAVERSABLE: 1,
         SPAWN: 2,
         GOAL: 3,
+        BUILDING: 4,
         NOT_TRAVERSABLE: 5
     };
 

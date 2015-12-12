@@ -77,10 +77,9 @@ define(['jquery', './dict'], function ($, dict) {
                 }));
 
             state.enemies.forEach(enemy => {
-                const x = enemy.position[0];
-                const y = enemy.position[1];
+                const cellToPixel = pos => pos.map(c => c * cellSize);
                 ctx.fillStyle = '#8ea052';
-                ctx.fillRect(cellSize * x, cellSize * y, cellSize, cellSize);
+                ctx.fillRect(...cellToPixel(enemy.position), cellSize, cellSize);
             })
         };
     };

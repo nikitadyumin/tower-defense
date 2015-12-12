@@ -41,7 +41,14 @@ define([], function() {
             set: setter
         };
     }
+
+    function eq(xs, ys) {
+        return xs.length === ys.length
+            && xs.every((x, index) => x === ys[index]);
+    }
+
     return  {
+        eq: eq,
         lens: lens,
         getter: fnGetter,
         setter: fnSetter

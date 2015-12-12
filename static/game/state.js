@@ -23,11 +23,6 @@ define(['bacon', '../util', './enemy', './dict', 'pf'], function (Bacon, util, e
         const spawnPositions = map.spawns;
         const tower = map.tower;
 
-        function eq(xs, ys) {
-            return xs.length === ys.length
-                && xs.every((x, index) => x === ys[index]);
-        }
-
         function nextPosition(x, y) {
             const path = finder.findPath(x, y, ...tower, grid.clone());
             return path.length > 1 ? path[1] : [x, y];
@@ -40,13 +35,13 @@ define(['bacon', '../util', './enemy', './dict', 'pf'], function (Bacon, util, e
             });
 
             state.enemies
-                .filter(e => eq(e.position, tower))
+                .filter(e => util.eq(e.position, tower))
                 .forEach(e => {
                    state.health -= e.damage;
                 });
 
             state.enemies = state.enemies
-                .filter(e => !eq(e.position, tower));
+                .filter(e => !util.eq(e.position, tower));
 
             return state;
         }
