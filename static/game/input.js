@@ -8,7 +8,7 @@ define(['jquery', './dict'], function($, dict) {
         const clickS = $(domElement).asEventStream('click');
 
         function toPixelCoords (evt) {
-            var rect = domElement.getBoundingClientRect();
+            const rect = domElement.getBoundingClientRect();
             return [
                 evt.clientX - rect.left,
                 evt.clientY - rect.top
