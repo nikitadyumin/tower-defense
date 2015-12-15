@@ -16,7 +16,7 @@ define(['jquery', '../util', './dict', './map', './buildings', './enemies', './s
             const mapS = map();
             const inputS = input(dict.VIEWPORT.SELECTOR);
             const buildingsS = buildings(mapS, inputS);
-            const enemiesS = enemies(mapS, tickS);
+            const enemiesS = enemies(mapS, tickS, buildingsS);
             const stateS = state(mapS, buildingsS, enemiesS);
 
             Bacon.combineAsArray(mapS, buildingsS, enemiesS)
