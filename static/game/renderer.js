@@ -1,7 +1,7 @@
 /**
  * Created by ndyumin on 06.12.2015.
  */
-define(['jquery', './dict'], function ($, dict) {
+define(['jquery', '../util/color', '../util/func', './dict'], function ($, c, f, dict) {
     'use strict';
     return function getRenderer(sel) {
         const canvas = document.querySelector(sel);
@@ -11,19 +11,15 @@ define(['jquery', './dict'], function ($, dict) {
         const height = $canvas.height();
         const cellSize = dict.GRID.CELL_SIZE;
 
-        //todo move to color module
-        function toRgbString(rgb) {
-            return `rgb(${rgb})`;
-        }
-        function shiftColor(rgb, v) {
-            return rgb.map(x=>x+v);
-        }
+        const shifted = f.compose(c.shiftColor, c.toRgbString);
 
         function drawCell (x, y, color) {
-            ctx.fillStyle = toRgbString(color);
+            const shiftedColor = shifted(color);
+
+            ctx.fillStyle = c.toRgbString(color);
             ctx.fillRect(x, y, cellSize, cellSize);
 
-            ctx.fillStyle = toRgbString(shiftColor(color, 20));
+            ctx.fillStyle = shiftedColor(20);
             ctx.beginPath();
             ctx.moveTo(x, y);
             ctx.lineTo(x, y + cellSize);
@@ -31,7 +27,7 @@ define(['jquery', './dict'], function ($, dict) {
             ctx.closePath();
             ctx.fill();
 
-            ctx.fillStyle = toRgbString(shiftColor(color, 10));
+            ctx.fillStyle = shiftedColor(10);
             ctx.beginPath();
             ctx.moveTo(x, y);
             ctx.lineTo(x, y + cellSize);
@@ -39,7 +35,7 @@ define(['jquery', './dict'], function ($, dict) {
             ctx.closePath();
             ctx.fill();
 
-            ctx.fillStyle =  toRgbString(shiftColor(color, -10));
+            ctx.fillStyle =  shiftedColor(-10);
             ctx.beginPath();
             ctx.moveTo(x + cellSize, y + cellSize);
             ctx.lineTo(x, y + cellSize);
@@ -58,7 +54,7 @@ define(['jquery', './dict'], function ($, dict) {
         }
 
         function clean(ctx) {
-            ctx.fillStyle = toRgbString(getColor());
+            ctx.fillStyle = c.toRgbString(getColor());
             ctx.fillRect(0, 0, width, height);
         }
 
@@ -69,7 +65,7 @@ define(['jquery', './dict'], function ($, dict) {
                     if (cell === dict.TERRAIN.NOT_TRAVERSABLE) {
                         drawCell(cellSize*x, cellSize*y, getColor(cell));
                     } else {
-                        ctx.fillStyle = toRgbString(getColor(cell));
+                        ctx.fillStyle = c.toRgbString(getColor(cell));
                         ctx.fillRect(cellSize * x, cellSize * y, cellSize, cellSize);
                     }
                 }));
