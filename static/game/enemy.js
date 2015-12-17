@@ -3,10 +3,13 @@
  */
 define(['bacon'], function(Bacon) {
     'use strict';
-    return function(pos) {
-        return Bacon.constant({
-            damage: 100,
-            position: pos
+    return function(spawnPositions) {
+        return Bacon.repeat(function (i) {
+            const spawnPositionCount = spawnPositions.length;
+            return Bacon.constant({
+                damage: 100,
+                position: spawnPositions[i % spawnPositionCount]
+            });
         });
     };
 });

@@ -12,11 +12,7 @@ define(['pf', '../util', './dict', './enemy'], function (pf, util, dict, enemy) 
 
 
     function initWaves(map) {
-        const enemyS = Bacon.repeat(function (i) {
-            const spawnPositions = map.spawns;
-            const spawnPositionCount = spawnPositions.length;
-            return Bacon.once(spawnPositions[i % spawnPositionCount])
-        }).flatMap(enemy);
+        const enemyS = enemy(map.spawns);
 
         return Bacon.fromBinder(function (sink) {
             const waves = map.waves;
