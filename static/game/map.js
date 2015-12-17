@@ -4,19 +4,22 @@
 define(['bacon', './dict'], function (Bacon, dict) {
     'use strict';
 
+    const COLUMN_COUNT = 40;
+    const ROW_COUNT = 30;
+
+    function array(n, map) {
+        return Array.from({length: n}, map);
+    }
+
     function generateLine() {
-        const line = [];
-        for (let j = 0; j < 40; j += 1) {
-            line.push(Math.random() < 0.7 ? dict.TERRAIN.TRAVERSABLE : dict.TERRAIN.NOT_TRAVERSABLE);
-        }
-        return line;
+        return array(COLUMN_COUNT, () =>
+            Math.random() < 0.7
+                ? dict.TERRAIN.TRAVERSABLE
+                : dict.TERRAIN.NOT_TRAVERSABLE);
     }
 
     function generateMap() {
-        const grid = [];
-        for (let i = 0; i < 30; i += 1) {
-            grid.push(generateLine());
-        }
+        const grid = array(ROW_COUNT, generateLine);
 
         grid[10][2] = dict.TERRAIN.SPAWN;
         grid[20][2] = dict.TERRAIN.SPAWN;
