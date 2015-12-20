@@ -1,7 +1,9 @@
-const express = require('express');
-const app = express();
+const koa = require('koa');
+const serve = require('koa-static');
+const app = koa();
 const port = +process.env.PORT || 2000;
 const host = process.env.HOST || '0.0.0.0';
 
-app.use(express.static('./static'));
+app.use(serve('./static'));
+
 app.listen(port, host);
