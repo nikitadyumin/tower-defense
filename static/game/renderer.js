@@ -28,13 +28,11 @@ define(['jquery', '../util/canvas', './dict'], function ($, canvas, dict) {
                 }));
 
             enemies.items.forEach(enemy => {
-                const cellToPixel = pos => pos.map(c => c * cellSize);
-                cv.drawSquare(...cellToPixel(enemy.position), [142, 160, 82]); //#8ea052
+                cv.drawSquare(...enemy.position, [142, 160, 82]); //#8ea052
             });
 
             buildings.forEach(building => {
-                const cellToPixel = pos => pos.map(c => c * cellSize);
-                cv.drawSquare(...cellToPixel(building.position), [160, 82, 142]); //#a0528e
+                cv.drawSquare(...building.position, [160, 82, 142]); //#a0528e
             });
         };
     };
