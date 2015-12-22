@@ -12,6 +12,12 @@ define(function() {
         NOT_TRAVERSABLE: 5
     };
 
+    const COLOR = {
+        BACKGROUND: 0,
+        BUILDING: 10,
+        ENEMY: 20
+    };
+
     const GRID = {
         CELL_SIZE: 30
     };
@@ -22,6 +28,7 @@ define(function() {
     };
 
     return {
+        COLOR: COLOR,
         VIEWPORT: VIEWPORT,
         GRID: GRID,
         TERRAIN: TERRAIN
