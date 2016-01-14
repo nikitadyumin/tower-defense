@@ -1,7 +1,7 @@
 /**
  * Created by ndyumin on 06.12.2015.
  */
-define(['bacon', './dict'], function (Bacon, dict) {
+define(['baconjs', './dict'], function (Bacon, dict) {
     'use strict';
 
     const COLUMN_COUNT = 40;

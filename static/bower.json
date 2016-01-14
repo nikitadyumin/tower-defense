@@ -23,6 +23,7 @@
     "jquery": "~2.1.4",
     "bootstrap": "~3.3.5",
     "bacon": "~0.7.80",
+    "rstore": "git://github.com/nikitadyumin/rstore.git",
     "pathfinding":"latest"
   }
 }

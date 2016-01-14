@@ -4,12 +4,16 @@ requirejs.config({
     baseUrl: './',
     paths: {
         jquery: '../bower_components/jquery/dist/jquery.min',
-        bacon: '../bower_components/bacon/dist/Bacon.min',
+        baconjs: '../bower_components/bacon/dist/Bacon.min',
+        rstore: '../bower_components/rstore/dist/rstore',
         pf: '../bower_components/pathfinding/pathfinding-browser'
     },
     shim: {
-        'bacon': {
+        'baconjs': {
             deps: ['jquery']
+        },
+        'rstore': {
+            deps: ['baconjs']
         },
         'pf': {
             exports: 'PF'
@@ -17,7 +21,13 @@ requirejs.config({
     }
 });
 
-require(['jquery', 'bacon', './game/dict', './router'], function ($, Bacon, dict, router) {
+require([
+    'jquery',
+    'baconjs',
+    'rstore',
+    './game/dict',
+    './router'
+], function ($, Bacon, rstore, dict, router) {
     function enableFullScreen(el) {
         const request = el.requestFullScreen || el.mozRequestFullScreen || el.webkitRequestFullScreen;
         const cancel = document.cancelFullScreen || document.mozCancelFullScreen || document.webkitCancelFullScreen;

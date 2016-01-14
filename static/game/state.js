@@ -2,7 +2,7 @@
  * Created by ndyumin on 06.12.2015.
  */
 
-define(['bacon', '../util'], function (Bacon, util) {
+define(['baconjs', '../util'], function (Bacon, util) {
     'use strict';
 
     const healthL = util.lens('health');

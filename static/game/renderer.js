@@ -35,7 +35,7 @@ define(['jquery', '../util/func', '../util/canvas', './dict'], function ($, f, c
 
             enemies.items.map(getPosition)
                 .forEach(drawAt(getColor(dict.COLOR.ENEMY)));
-            buildings.items.map(getPosition)
+            buildings.map(getPosition)
                 .forEach(drawAt(getColor(dict.COLOR.BUILDING)));
         };
     };
